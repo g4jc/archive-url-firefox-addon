@@ -1,7 +1,7 @@
-Wayback Machine Firefox Addon
+Wayback Machine Addon - Legacy Fork
 ========
 
-This Firefox addon will add a new item to the context menu and the toolbar menu, allowing you to save the current webpage to the [Wayback Machine](http://archive.org/web/). The toolbar button also allows you to save the webpage to [archive.is](archive.is).
+This addon will add a new item to the context menu and the toolbar menu, allowing you to save the current webpage to the [Wayback Machine](http://archive.org/web/). The toolbar button also allows you to save the webpage to [archive.is](archive.is).
 
 Installation
 ========
@@ -14,4 +14,4 @@ To build and install this extension from source, you will first need to install 
 jpm xpi
 ```
 
-This will then create an .xpi file (IE @save-url-to-wayback-machine-firefox-addon-0.0.1.xpi). Once this file is generated, go to Firefox and choose File - Open File and select the .xpi file you generated. Firefox will then ask if you want to install the addon.
+This will then create an .xpi file (IE @save-url-to-wayback-machine-addon-0.0.1.xpi). Once this file is generated, go to the Browser Application and choose File - Open File and select the .xpi file you generated. The application will then ask if you want to install the addon.
