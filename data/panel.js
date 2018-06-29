@@ -1,6 +1,7 @@
 // Access the elements in panel.html
 var saveWaybackMachineButton = document.getElementById("saveWaybackMachine");
 var saveArchiveIsButton = document.getElementById("saveArchiveIs");
+var saveToBothButton = document.getElementById("saveToBoth");
 
 // Listen for button clicks and emit for index.js to run associated functions
 saveWaybackMachineButton.addEventListener('click', function() {
@@ -9,6 +10,10 @@ saveWaybackMachineButton.addEventListener('click', function() {
 
 saveArchiveIsButton.addEventListener('click', function() {
 	self.port.emit("saveArchiveIs");
+});
+
+saveToBothButton.addEventListener('click', function() {
+	self.port.emit("saveToBoth");
 });
 
 // Handle the 'hover' style in Javascript rather than CSS
@@ -26,4 +31,12 @@ $('#saveArchiveIs').mouseenter(function(e) {
 	$('#saveArchiveIs').removeClass('hover');
 }).click(function(e) {
 	$('#saveArchiveIs').removeClass('hover');
+});
+
+$('#saveToBoth').mouseenter(function(e) {
+	$('#saveToBoth').addClass('hover');
+}).mouseleave(function(e) {
+	$('#saveToBoth').removeClass('hover');
+}).click(function(e) {
+	$('#saveToBoth').removeClass('hover');
 });

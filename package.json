@@ -1,11 +1,11 @@
 {
   "title": "Save URL to Wayback Machine",
-  "name": "save-url-to-wayback-machine-firefox-addon",
-  "version": "0.0.6",
+  "name": "save-url-to-wayback-machine-addon",
+  "version": "0.0.7",
   "preferences": [{
         "name": "defaultArchiver",
         "title": "Default Archiver",
-        "description": "Choose the default archiver to be shown in the context menu.",
+        "description": "Choose the default archiver to be used when OneClick is enabled.",
         "type": "radio",
         "value": "waybackMachine",
         "options": [{
@@ -14,7 +14,11 @@
         },
         {
           "value": "archiveIs",
-          "label": "archive.is"
+          "label": "Archive.is"
+        },
+        {
+          "value": "toBoth",
+          "label": "Save To Both"
         }
       ]
     },
@@ -25,7 +29,7 @@
         "type": "bool",
         "value": false
     }],
-  "description": "This Firefox addon will add a new item to the context menu and the toolbar menu, allowing you to save the current webpage to the Wayback Machine. The toolbar button also allows you to save the webpage to archive.is.",
+  "description": "This addon will add a new item to the context menu and the toolbar menu, allowing you to save the current webpage to the Wayback Machine. The toolbar button also allows you to save the webpage to archive.is.",
   "main": "index.js",
   "author": "Jonathan McCann",
   "engines": {

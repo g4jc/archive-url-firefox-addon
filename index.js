@@ -11,8 +11,9 @@ require("sdk/simple-prefs").on("defaultArchiver", onDefaultArchiverPreferenceCha
 require("sdk/simple-prefs").on("oneClickSave", onOneClickSavePreferenceChange);
 
 // Create string constants for the context menu label
-var archiveIsLabel = "Save to archive.is";
+var archiveIsLabel = "Save to Archive.is";
 var waybackMachineLabel = "Save to Wayback Machine";
+var toBothLabel = "Save to Both";
 
 // Create string constants for the toolbar button label
 var saveUrlLabel = "Save URL";
@@ -22,7 +23,19 @@ var defaultArchiver = preferences.defaultArchiver;
 var oneClickSave = preferences.oneClickSave;
 
 // Initialize labels
-var contextMenuArchiverLabel = (defaultArchiver == "archiveIs") ? archiveIsLabel : waybackMachineLabel;
+if (defaultArchiver == "archiveIs") {
+	var contextMenuArchiverLabel = archiveIsLabel;
+}
+if (defaultArchiver == "waybackMachine") {
+	var contextMenuArchiverLabel = waybackMachineLabel;
+}
+if (defaultArchiver == "toBoth") {
+	var contextMenuArchiverLabel = toBothLabel;
+}
+else {
+	console.error("Save URL to Wayback Machine: Missing Label Pref 1"); 
+}
+//var contextMenuArchiverLabel = (defaultArchiver == "archiveIs") ? archiveIsLabel : waybackMachineLabel : saveToBothLabel;
 var toolbarButtonLabel = oneClickSave ? contextMenuArchiverLabel : saveUrlLabel;
 
 // Create toggle button for toolbar
@@ -55,7 +68,7 @@ var panel = panels.Panel({
 	contentScriptFile: [self.data.url("jquery-1.11.3.min.js"), self.data.url("panel.js")],
 	onHide: handleHide,
 	width: 210,
-	height: 55
+	height: 70
 });
 
 function handleChange(state) {
@@ -79,8 +92,14 @@ function handleSave() {
 	if (defaultArchiver == "archiveIs") {
 		handleSaveArchiveIs();
 	}
-	else {
+	if (defaultArchiver == "waybackMachine") {
 		handleSaveWaybackMachine();
+	}
+	if (defaultArchiver == "toBoth") {
+		handleSaveToBoth();
+	}
+	else {
+		console.error("Save URL to Wayback Machine: Missing Label Pref 2"); 
 	}
 }
 
@@ -102,10 +121,33 @@ function handleSaveWaybackMachine() {
 	panel.hide();
 }
 
+function handleSaveToBoth() {
+	var document = windowUtils.getMostRecentBrowserWindow().document;
+
+	var url = document.getElementById("urlbar").value;
+
+	tabs.open("https://archive.today/?run=1&url=" + encodeURIComponent(url));
+	tabs.open("https://web.archive.org/save/" + document.getElementById("urlbar").value);
+	
+	panel.hide();
+}
+
 function onDefaultArchiverPreferenceChange() {
 	defaultArchiver = preferences.defaultArchiver;
 
-	contextMenuArchiverLabel = (defaultArchiver == "archiveIs") ? archiveIsLabel : waybackMachineLabel;
+	// Initialize labels
+	if (defaultArchiver == "archiveIs") {
+		var contextMenuArchiverLabel = archiveIsLabel;
+	}
+	if (defaultArchiver == "waybackMachine") {
+		var contextMenuArchiverLabel = waybackMachineLabel;
+	}
+	if (defaultArchiver == "toBoth") {
+		var contextMenuArchiverLabel = toBothLabel;
+	}
+	else {
+		console.error("Save URL to Wayback Machine: Missing Label Pref 3"); 
+	}
 	menuItem.label = contextMenuArchiverLabel;
 
 	toolbarButtonLabel = oneClickSave ? contextMenuArchiverLabel : saveUrlLabel;
@@ -126,4 +168,8 @@ panel.port.on("saveArchiveIs" , function() {
 
 panel.port.on("saveWaybackMachine" , function() {
 	handleSaveWaybackMachine();
+});
+
+panel.port.on("saveToBoth" , function() {
+	handleSaveToBoth();
 });
